@@ -13,6 +13,9 @@ export const firstPrioritiesCalc = (stack: ParsedLineType): ParsedLineType =>
         const prevItem = result[result.length - 2];
         const item = result[result.length - 1];
         if (!isNumber(String(item)) && mathOperatorsPriorities[item] === FIRST) {
+            if (!mathOperators[item]) {
+                throw new TypeError("Unexpected stack!");
+            }
             result = [
                 ...result.slice(0, -2),
                 mathOperators[item](Number(prevItem), Number(nextItem)),
